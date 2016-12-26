@@ -9,7 +9,9 @@ class List extends React.Component{
   }
   constructor(props){
     super(props);
-    this.state = {mang: ['Android', 'iOS', 'NodeJS', 'Script']}
+    this.state = {
+      mang: ['Android', 'iOS', 'NodeJS', 'Script']
+    }
   }
   render(){
     return (
@@ -38,19 +40,28 @@ class Note extends React.Component{
 }
 
 class NoteForm extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {isAdding: false}
+  }
+  show(){
+    this.setState({isAdding: true})
+  }
   add(){
     var {handleAdd} = this.props;
     handleAdd(this.refs.txt.value);
     this.refs.txt.value = '';
+    this.setState({isAdding: false})
   }
   render(){
-    return (
-      <div>
-        <input type="text" ref="txt" placeholder="Enter your note"/>
-        <br/><br/>
-        <button onClick={this.add.bind(this)}>Add</button>
-      </div>
-    );
+    var xhtml = this.state.isAdding?
+    <div>
+      <input type="text" ref="txt" placeholder="Enter your note"/>
+      <br/><br/>
+      <button onClick={this.add.bind(this)}>Add</button>
+    </div>:
+    <button onClick={this.show.bind(this)}>Show</button>
+    return (xhtml);
   }
 }
 ReactDOM.render(
