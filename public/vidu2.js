@@ -25,17 +25,37 @@ class List extends React.Component{
 }
 
 class Note extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {isUpdating: false}
+  }
+  save(){
+
+  }
+  cancel(){
+    this.setState({isUpdating: false});
+  }
+  update(){
+    this.setState({isUpdating: true});
+  }
   remove(){
     var {handleRemove, index} = this.props;
     handleRemove(index);
   }
   render(){
-    return (
-      <div>
-        <p>{this.props.children}</p>
-        <button onClick={this.remove.bind(this)}>Xoa</button>
-      </div>
-    )
+    var xhtml = this.state.isUpdating?
+    <div>
+      <input type="text" defaultValue={this.props.children}/>
+      <br/><br/>
+      <button onClick={this.save.bind(this)}>Luu</button>
+      <button onClick={this.cancel.bind(this)}>Huy</button>
+    </div>:
+    <div>
+      <p>{this.props.children}</p>
+      <button onClick={this.remove.bind(this)}>Xoa</button>
+      <button onClick={this.update.bind(this)}>Sua</button>
+    </div>
+    return (xhtml);
   }
 }
 
