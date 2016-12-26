@@ -7,24 +7,32 @@ class List extends React.Component{
     return (
       <div>
         <h1>Hello Component</h1>
-        {this.state.mang.map((e, i) => <Note key={i}>{e}</Note>)}
+        {this.state.mang.map((e, i) => <Note key={i} index={i} parent={this}>{e}</Note>)}
       </div>
     );
   }
 }
 
 class Note extends React.Component{
+  remove(){
+    var {parent} = this.props;
+    parent.state.mang.splice(this.props.index, 1);
+    parent.setState(parent.state);
+  }
   render(){
     return (
       <div>
         <p>{this.props.children}</p>
-        <button>Xoa</button>
+        <button onClick={this.remove.bind(this)}>Xoa</button>
       </div>
     )
   }
 }
 
 ReactDOM.render(
-  <List/>,
+  <div>
+    <List/>
+    <List/>
+  </div>,
   document.getElementById('root')
 );
