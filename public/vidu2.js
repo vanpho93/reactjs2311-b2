@@ -1,4 +1,8 @@
 class List extends React.Component{
+  remove(index){
+    this.state.mang.splice(index, 1);
+    this.setState(this.state);
+  }
   add(txt){
     this.state.mang.push(txt);
     this.setState(this.state);
@@ -12,7 +16,7 @@ class List extends React.Component{
       <div>
         <NoteForm handleAdd={this.add.bind(this)}/>
         {this.state.mang.map((e, i) => <Note key={i} index={i}
-        parent={this}>{e}</Note>)}
+        handleRemove={this.remove.bind(this)}>{e}</Note>)}
       </div>
     );
   }
@@ -20,9 +24,8 @@ class List extends React.Component{
 
 class Note extends React.Component{
   remove(){
-    var {parent} = this.props;
-    parent.state.mang.splice(this.props.index, 1);
-    parent.setState(parent.state);
+    var {handleRemove, index} = this.props;
+    handleRemove(index);
   }
   render(){
     return (
