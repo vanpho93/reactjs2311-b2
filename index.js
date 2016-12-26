@@ -1,5 +1,5 @@
 var express = require('express');
-var parser = require('body-parser').ulrencoded({extended: false});
+var parser = require('body-parser').urlencoded({extended: false});
 var app = express();
 app.set('view engine', 'ejs');
 app.set('views', './views');
