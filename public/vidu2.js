@@ -14,7 +14,11 @@ class List extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      mang: ['Android', 'iOS', 'NodeJS', 'Script']
+      mang: [
+        {id: 1, subject: 'Hoc tap', content: 'Nho lam bai tap'},
+        {id: 1, subject: 'Hoc tap', content: 'Nho lam bai tap'},
+        {id: 1, subject: 'Hoc tap', content: 'Nho lam bai tap'}
+      ]
     }
   }
   render(){
@@ -23,7 +27,7 @@ class List extends React.Component{
         <NoteForm handleAdd={this.add.bind(this)}/>
         {this.state.mang.map((e, i) => <Note key={i} index={i}
         handleRemove={this.remove.bind(this)}
-        handleSave={this.update.bind(this)}>{e}</Note>)}
+        handleSave={this.update.bind(this)} info={e}/>)}
       </div>
     );
   }
@@ -52,13 +56,15 @@ class Note extends React.Component{
   render(){
     var xhtml = this.state.isUpdating?
     <div>
-      <input type="text" defaultValue={this.props.children} ref="txt"/>
+      <h1>{this.props.info.subject}</h1>
+      <input type="text" defaultValue={this.props.info.content} ref="txt"/>
       <br/><br/>
       <button onClick={this.save.bind(this)}>Luu</button>
       <button onClick={this.cancel.bind(this)}>Huy</button>
     </div>:
     <div>
-      <p>{this.props.children}</p>
+      <h1>{this.props.info.subject}</h1>
+      <p>{this.props.info.content}</p>
       <button onClick={this.remove.bind(this)}>Xoa</button>
       <button onClick={this.update.bind(this)}>Sua</button>
     </div>
