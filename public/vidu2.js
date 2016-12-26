@@ -1,4 +1,8 @@
 class List extends React.Component{
+  add(txt){
+    this.state.mang.push(txt);
+    this.setState(this.state);
+  }
   constructor(props){
     super(props);
     this.state = {mang: ['Android', 'iOS', 'NodeJS', 'Script']}
@@ -6,7 +10,7 @@ class List extends React.Component{
   render(){
     return (
       <div>
-        <NoteForm parent={this}/>
+        <NoteForm handleAdd={this.add.bind(this)}/>
         {this.state.mang.map((e, i) => <Note key={i} index={i}
         parent={this}>{e}</Note>)}
       </div>
@@ -32,9 +36,8 @@ class Note extends React.Component{
 
 class NoteForm extends React.Component{
   add(){
-    var {parent} = this.props;
-    parent.state.mang.push(this.refs.txt.value);
-    parent.setState(parent.state);
+    var {handleAdd} = this.props;
+    handleAdd(this.refs.txt.value);
     this.refs.txt.value = '';
   }
   render(){
