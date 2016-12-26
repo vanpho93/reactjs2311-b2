@@ -1,4 +1,8 @@
 class List extends React.Component{
+  update(index, text){
+    this.state.mang[index] = text;
+    this.setState(this.state);
+  }
   remove(index){
     this.state.mang.splice(index, 1);
     this.setState(this.state);
@@ -18,7 +22,8 @@ class List extends React.Component{
       <div>
         <NoteForm handleAdd={this.add.bind(this)}/>
         {this.state.mang.map((e, i) => <Note key={i} index={i}
-        handleRemove={this.remove.bind(this)}>{e}</Note>)}
+        handleRemove={this.remove.bind(this)}
+        handleSave={this.update.bind(this)}>{e}</Note>)}
       </div>
     );
   }
@@ -30,7 +35,9 @@ class Note extends React.Component{
     this.state = {isUpdating: false}
   }
   save(){
-
+    var {handleSave, index} = this.props;
+    handleSave(index, this.refs.txt.value);
+    this.setState({isUpdating: false});
   }
   cancel(){
     this.setState({isUpdating: false});
@@ -45,7 +52,7 @@ class Note extends React.Component{
   render(){
     var xhtml = this.state.isUpdating?
     <div>
-      <input type="text" defaultValue={this.props.children}/>
+      <input type="text" defaultValue={this.props.children} ref="txt"/>
       <br/><br/>
       <button onClick={this.save.bind(this)}>Luu</button>
       <button onClick={this.cancel.bind(this)}>Huy</button>
