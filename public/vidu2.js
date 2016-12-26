@@ -31,6 +31,12 @@ class List extends React.Component{
       </div>
     );
   }
+  componentDidMount(){
+    $.post('/select', (rows) => {
+      this.state.mang = rows;
+      this.setState(this.state);
+    })
+  }
 }
 
 class Note extends React.Component{
