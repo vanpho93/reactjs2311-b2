@@ -27,7 +27,7 @@ function query(sql, cb){
 //delete
 
 function insertNote(sub, note, cb){
-  var sql = `INSERT INTO "Notes"(subject, content) VALUES ('${sub}', '${note}')`;
+  var sql = `INSERT INTO "Notes"(subject, content) VALUES ('${sub}', '${note}') RETURNING *`;
   query(sql, cb);
 }
 

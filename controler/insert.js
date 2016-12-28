@@ -5,6 +5,6 @@ module.exports = (req, res) => {
     if(err){
       return res.send(err);
     }
-    res.send('Thanh cong');
+    res.send(result.rows[0]);
   });
 };

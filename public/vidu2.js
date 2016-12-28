@@ -7,18 +7,14 @@ class List extends React.Component{
     this.state.mang.splice(index, 1);
     this.setState(this.state);
   }
-  add(txt){
-    this.state.mang.push(txt);
+  add(obj){
+    this.state.mang.push(obj);
     this.setState(this.state);
   }
   constructor(props){
     super(props);
     this.state = {
-      mang: [
-        {id: 1, subject: 'Hoc tap', content: 'Nho lam bai tap'},
-        {id: 1, subject: 'Hoc tap', content: 'Nho lam bai tap'},
-        {id: 1, subject: 'Hoc tap', content: 'Nho lam bai tap'}
-      ]
+      mang: []
     }
   }
   render(){
@@ -87,15 +83,22 @@ class NoteForm extends React.Component{
     this.setState({isAdding: true})
   }
   add(){
-    var {handleAdd} = this.props;
-    handleAdd(this.refs.txt.value);
-    this.refs.txt.value = '';
+    // var {handleAdd} = this.props;
+    // handleAdd(this.refs.txt.value);
+    // this.refs.txt.value = '';
+    var sub = this.refs.sub.value;
+    var note = this.refs.note.value;
+    $.post('/insert', {sub, note}, data => {
+      this.props.handleAdd(data);
+    });
     this.setState({isAdding: false})
   }
   render(){
     var xhtml = this.state.isAdding?
     <div>
-      <input type="text" ref="txt" placeholder="Enter your note"/>
+      <input type="text" ref="sub" placeholder="Enter your subject"/>
+      <br/><br/>
+      <input type="text" ref="note" placeholder="Enter your note"/>
       <br/><br/>
       <button onClick={this.add.bind(this)}>Add</button>
     </div>:
