@@ -41,7 +41,7 @@ function removeNote(id, cb){
 }
 
 function updateNote(subject, content, id, cb){
-  var sql = `UPDATE "Notes" SET subject='${subject}', content='${content}' WHERE id = ${id}`;
+  var sql = `UPDATE "Notes" SET subject='${subject}', content='${content}' WHERE id = ${id} RETURNING *`;
   query(sql, cb);
 }
 

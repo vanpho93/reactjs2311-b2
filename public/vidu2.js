@@ -1,6 +1,6 @@
 class List extends React.Component{
-  update(index, text){
-    this.state.mang[index] = text;
+  update(index, obj){
+    this.state.mang[index] = obj;
     this.setState(this.state);
   }
   remove(index){
@@ -42,7 +42,15 @@ class Note extends React.Component{
   }
   save(){
     var {handleSave, index} = this.props;
-    handleSave(index, this.refs.txt.value);
+    //handleSave(index, this.refs.txt.value);
+    var content = this.refs.note.value;
+    var sub = this.refs.sub.value;
+    var id = this.props.info.id;
+    $.post('/update', {id, content, sub}, data => {
+      //Xu ly loi neu co
+      console.log(data);
+      handleSave(index, data);
+    });
     this.setState({isUpdating: false});
   }
   cancel(){
@@ -67,7 +75,9 @@ class Note extends React.Component{
     var xhtml = this.state.isUpdating?
     <div>
       <h1>{this.props.info.subject}</h1>
-      <input type="text" defaultValue={this.props.info.content} ref="txt"/>
+      <input type="text" defaultValue={this.props.info.subject} ref="sub"/>
+      <br/><br/>
+      <input type="text" defaultValue={this.props.info.content} ref="note"/>
       <br/><br/>
       <button onClick={this.save.bind(this)}>Luu</button>
       <button onClick={this.cancel.bind(this)}>Huy</button>
