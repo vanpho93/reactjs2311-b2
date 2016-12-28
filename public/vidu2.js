@@ -53,7 +53,15 @@ class Note extends React.Component{
   }
   remove(){
     var {handleRemove, index} = this.props;
-    handleRemove(index);
+    var {id} = this.props.info;
+    $.post('/remove', {id}, data => {
+      if(data == 'Thanh cong'){
+        handleRemove(index);
+      }else{
+        alert('Loi: ' + data)
+      }
+    });
+    //handleRemove(index);
   }
   render(){
     var xhtml = this.state.isUpdating?
@@ -106,6 +114,7 @@ class NoteForm extends React.Component{
     return (xhtml);
   }
 }
+
 ReactDOM.render(
   <div>
     <List/>
